@@ -40,17 +40,25 @@ class EmotionalFaceView(context: Context, attrs: AttributeSet) : View(context, a
     }
 
     private fun setupAttributes(attrs: AttributeSet?) {
-        val typedArray = context.theme.obtainStyledAttributes(attrs, R.styleable.EmotionalFaceView,
-            0, 0)
+        val typedArray = context.theme.obtainStyledAttributes(
+            attrs, R.styleable.EmotionalFaceView,
+            0, 0
+        )
 
-        happinessState = typedArray.getInt(R.styleable.EmotionalFaceView_state, HAPPY.toInt()).toLong()
+        happinessState =
+            typedArray.getInt(R.styleable.EmotionalFaceView_state, HAPPY.toInt()).toLong()
         faceColor = typedArray.getColor(R.styleable.EmotionalFaceView_faceColor, DEFAULT_FACE_COLOR)
         eyesColor = typedArray.getColor(R.styleable.EmotionalFaceView_eyesColor, DEFAULT_EYES_COLOR)
-        mouthColor = typedArray.getColor(R.styleable.EmotionalFaceView_mouthColor, DEFAULT_MOUTH_COLOR)
-        borderColor = typedArray.getColor(R.styleable.EmotionalFaceView_borderColor,
-            DEFAULT_BORDER_COLOR)
-        borderWidth = typedArray.getDimension(R.styleable.EmotionalFaceView_borderWidth,
-            DEFAULT_BORDER_WIDTH)
+        mouthColor =
+            typedArray.getColor(R.styleable.EmotionalFaceView_mouthColor, DEFAULT_MOUTH_COLOR)
+        borderColor = typedArray.getColor(
+            R.styleable.EmotionalFaceView_borderColor,
+            DEFAULT_BORDER_COLOR
+        )
+        borderWidth = typedArray.getDimension(
+            R.styleable.EmotionalFaceView_borderWidth,
+            DEFAULT_BORDER_WIDTH
+        )
 
         typedArray.recycle()
     }
@@ -96,12 +104,17 @@ class EmotionalFaceView(context: Context, attrs: AttributeSet) : View(context, a
 
     private fun drawMouth(canvas: Canvas) {
 
+        mouthPath.reset()
+
         mouthPath.moveTo(size * 0.22f, size * 0.7f)
 
-        mouthPath.quadTo(size * 0.50f, size * 0.80f, size * 0.78f, size * 0.70f)
-
-        mouthPath.quadTo(size * 0.50f, size * 0.90f, size * 0.22f, size * 0.70f)
-
+        if (happinessState == HAPPY) {
+            mouthPath.quadTo(size * 0.5f, size * 0.80f, size * 0.78f, size * 0.7f)
+            mouthPath.quadTo(size * 0.5f, size * 0.90f, size * 0.22f, size * 0.7f)
+        } else {
+            mouthPath.quadTo(size * 0.5f, size * 0.50f, size * 0.78f, size * 0.7f)
+            mouthPath.quadTo(size * 0.5f, size * 0.60f, size * 0.22f, size * 0.7f)
+        }
         paint.color = mouthColor
         paint.style = Paint.Style.FILL
 
