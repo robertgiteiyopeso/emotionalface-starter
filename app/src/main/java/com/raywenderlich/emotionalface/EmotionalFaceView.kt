@@ -72,4 +72,11 @@ class EmotionalFaceView(context: Context, attrs: AttributeSet) : View(context, a
         canvas.drawPath(mouthPath, paint)
     }
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        size = Math.min(measuredWidth, measuredHeight)
+        setMeasuredDimension(size, size)
+    }
+
 }
